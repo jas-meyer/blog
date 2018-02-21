@@ -1,0 +1,22 @@
+#wrapper{
+	width: 1000px;
+}
+#title{
+	height: 66px;
+	width: 217px;
+	border: solid black;
+	margin: 0px 0px 28px 254px;
+}
+#time{
+	width: 700px;
+	height: 200px;
+	border: solid black;
+	margin: 0px 0px 0px 0px;
+}
+h1{
+	text-align: center;
+	width: 225px;
+	height: 100px;
+	margin: 0px 0px 0px 254px;
+
+}

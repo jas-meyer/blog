@@ -1,0 +1,152 @@
+Migrations for 'dojo_ninjas':
+  apps/dojo_ninjas/migrations/0002_auto_20180220_2023.py:
+    - Add field state to dojo
+    - Alter field name on dojo
+(djangoEnv) Jasons-MacBook-Pro:blog jasonmeyer$ python manage.py migrate
+Operations to perform:
+  Apply all migrations: admin, auth, contenttypes, dojo_ninjas, sessions, user_login
+Running migrations:
+  Rendering model states... DONE
+  Applying dojo_ninjas.0002_auto_20180220_2023... OK
+(djangoEnv) Jasons-MacBook-Pro:blog jasonmeyer$ python manage.py shell
+Python 2.7.10 (default, Oct 23 2015, 19:19:21) 
+[GCC 4.2.1 Compatible Apple LLVM 7.0.0 (clang-700.0.59.5)] on darwin
+Type "help", "copyright", "credits" or "license" for more information.
+(InteractiveConsole)
+>>> import apps.dojo_ninjas.models import *
+  File "<console>", line 1
+    import apps.dojo_ninjas.models import *
+                                        ^
+SyntaxError: invalid syntax
+>>> from apps.dojo_ninjas.models import *
+>>> Dojo.objects.create(name = "CodingDojo Silicon Valley", city = "Mountain View", state = "CA")
+<Dojo: Dojo object>
+>>> Dojo.objects.create(name = "CodingDojo Seattle", city = "Seattle", state = "WA")
+<Dojo: Dojo object>
+>>> Dojo.objects.create(name = "CodingDojo New York", city = "New York", state = "NY")
+<Dojo: Dojo object>
+>>> Dojo.objects.first().ninja.all()
+Traceback (most recent call last):
+  File "<console>", line 1, in <module>
+AttributeError: 'Dojo' object has no attribute 'ninja'
+>>> Dojo.objects.first().ninjas.all()
+<QuerySet []>
+>>> b = Dojo.objects.get(id=1)
+>>> b.delete()
+(1, {u'dojo_ninjas.Ninja': 0, u'dojo_ninjas.Dojo': 1})
+>>> b = Dojo.objects.get(id=2)
+>>> b.delete()
+(1, {u'dojo_ninjas.Ninja': 0, u'dojo_ninjas.Dojo': 1})
+>>> b = Dojo.objects.get(id=3)
+>>> b.delete()
+(1, {u'dojo_ninjas.Ninja': 0, u'dojo_ninjas.Dojo': 1})
+>>> Dojo.objects.all()
+<QuerySet []>
+>>> Dojo.objects.create(name = "CodingDojo Dallas", city = "Dallas", state = "TX")
+<Dojo: Dojo object>
+>>> Dojo.objects.create(name = "CodingDojo Austin", city = "Austin", state = "TX")
+<Dojo: Dojo object>
+>>> Dojo.objects.create(name = "CodingDojo Salt Lake City", city = "Salt Lake City", state = "UT")
+<Dojo: Dojo object>
+>>> Ninja.objects.create(dojo = 4, first_name = "Doug", last_name = "Funny")
+Traceback (most recent call last):
+  File "<console>", line 1, in <module>
+  File "/Users/jasonmeyer/Desktop/pythonstack/myEnvironments/djangoEnv/lib/python2.7/site-packages/django/db/models/manager.py", line 85, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/Users/jasonmeyer/Desktop/pythonstack/myEnvironments/djangoEnv/lib/python2.7/site-packages/django/db/models/query.py", line 397, in create
+    obj = self.model(**kwargs)
+  File "/Users/jasonmeyer/Desktop/pythonstack/myEnvironments/djangoEnv/lib/python2.7/site-packages/django/db/models/base.py", line 537, in __init__
+    setattr(self, field.name, rel_obj)
+  File "/Users/jasonmeyer/Desktop/pythonstack/myEnvironments/djangoEnv/lib/python2.7/site-packages/django/db/models/fields/related_descriptors.py", line 211, in __set__
+    self.field.remote_field.model._meta.object_name,
+ValueError: Cannot assign "4": "Ninja.dojo" must be a "Dojo" instance.
+>>> Ninja.objects.create(dojo = Dojo.objects.get(id=4), first_name = "Doug", last_name = "Funny")
+<Ninja: Ninja object>
+>>> Ninja.objects.create(dojo = Dojo.objects.get(id=4), first_name = "Roger", last_name = "Kloutz")
+<Ninja: Ninja object>
+>>> Ninja.objects.create(dojo = Dojo.objects.get(id=4), first_name = "Patty", last_name = "Mayo")
+<Ninja: Ninja object>
+>>> Ninja.objects.create(dojo = Dojo.objects.get(id=5), first_name = "Eric", last_name = "Cartman")
+<Ninja: Ninja object>
+>>> Ninja.objects.create(dojo = Dojo.objects.get(id=5), first_name = "Stan", last_name = "Marsh")
+<Ninja: Ninja object>
+>>> Ninja.objects.create(dojo = Dojo.objects.get(id=5), first_name = "Kenny", last_name = "McCormack")
+<Ninja: Ninja object>
+>>> Ninja.objects.create(dojo = Dojo.objects.get(id=6), first_name = "Homer", last_name = "Simpson")
+<Ninja: Ninja object>
+>>> Ninja.objects.create(dojo = Dojo.objects.get(id=6), first_name = "Bart", last_name = "Simpson")
+<Ninja: Ninja object>
+>>> Ninja.objects.create(dojo = Dojo.objects.get(id=6), first_name = "Maggie", last_name = "Simpson")
+<Ninja: Ninja object>
+>>> Dojo.objects.first()ninjas.all()
+  File "<console>", line 1
+    Dojo.objects.first()ninjas.all()
+                             ^
+SyntaxError: invalid syntax
+>>> Dojo.objects.first().ninjas.all()
+<QuerySet [<Ninja: Ninja object>, <Ninja: Ninja object>, <Ninja: Ninja object>]>
+>>> Dojo.objects.last().ninjas.all()
+<QuerySet [<Ninja: Ninja object>, <Ninja: Ninja object>, <Ninja: Ninja object>]>
+>>> a = Dojo.objects.first().ninjas.all()                                       >>> b= Dojo.objects.last().ninjas.all()
+>>> for x in a
+  File "<console>", line 1
+    for x in a
+             ^
+SyntaxError: invalid syntax
+>>> for x in a:
+... 
+... x.first_name
+  File "<console>", line 3
+    x.first_name
+    ^
+IndentationError: expected an indented block
+>>> for x in a:
+... x.first_name
+  File "<console>", line 2
+    x.first_name
+    ^
+IndentationError: expected an indented block
+>>> x.first_name
+Traceback (most recent call last):
+  File "<console>", line 1, in <module>
+NameError: name 'x' is not defined
+>>> a.first_name
+Traceback (most recent call last):
+  File "<console>", line 1, in <module>
+AttributeError: 'QuerySet' object has no attribute 'first_name'
+>>> a[0].first_name
+u'Doug'
+>>> a[1].first_name
+u'Roger'
+>>> a[2].first_name
+u'Patty'
+>>> b[0].first_name
+u'Homer'
+>>> exit()
+(djangoEnv) Jasons-MacBook-Pro:blog jasonmeyer$ python manage.py makemigrations
+You are trying to add a non-nullable field 'desc' to dojo without a default; we can't do that (the database needs something to populate existing rows).
+Please select a fix:
+ 1) Provide a one-off default now (will be set on all existing rows with a null value for this column)
+ 2) Quit, and let me add a default in models.py
+Select an option: 1
+Please enter the default value now, as valid Python
+The datetime and django.utils.timezone modules are available, so you can do e.g. timezone.now
+Type 'exit' to exit this prompt
+>>> " "
+Migrations for 'dojo_ninjas':
+  apps/dojo_ninjas/migrations/0003_dojo_desc.py:
+    - Add field desc to dojo
+(djangoEnv) Jasons-MacBook-Pro:blog jasonmeyer$ python manage.py migrate
+Operations to perform:
+  Apply all migrations: admin, auth, contenttypes, dojo_ninjas, sessions, user_login
+Running migrations:
+  Rendering model states... DONE
+  Applying dojo_ninjas.0003_dojo_desc... OK
+(djangoEnv) Jasons-MacBook-Pro:blog jasonmeyer$ python manage.py shell
+Python 2.7.10 (default, Oct 23 2015, 19:19:21) 
+[GCC 4.2.1 Compatible Apple LLVM 7.0.0 (clang-700.0.59.5)] on darwin
+Type "help", "copyright", "credits" or "license" for more information.
+(InteractiveConsole)
+>>> from apps.dojo_ninjas.models import *
+>>> exit()
+(djangoEnv) Jasons-MacBook-Pro:blog jasonmeyer$ 

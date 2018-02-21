@@ -1,0 +1,182 @@
+Migrations for 'book_authors':
+  apps/book_authors/migrations/0002_author_notes.py:
+    - Add field notes to author
+(djangoEnv) Jasons-MacBook-Pro:blog jasonmeyer$ python manage.py migrate
+Operations to perform:
+  Apply all migrations: admin, auth, book_authors, contenttypes, dojo_ninjas, sessions, user_login
+Running migrations:
+  Rendering model states... DONE
+  Applying book_authors.0002_author_notes... OK
+(djangoEnv) Jasons-MacBook-Pro:blog jasonmeyer$ python manage.py shell
+Python 2.7.10 (default, Oct 23 2015, 19:19:21) 
+[GCC 4.2.1 Compatible Apple LLVM 7.0.0 (clang-700.0.59.5)] on darwin
+Type "help", "copyright", "credits" or "license" for more information.
+(InteractiveConsole)
+>>> from apps.book_authors.models import *
+>>> a = Book.objects.get(id=5)
+>>> a.name = "C#"
+>>> b.save()
+Traceback (most recent call last):
+  File "<console>", line 1, in <module>
+NameError: name 'b' is not defined
+>>> a.save()
+>>> a = Author.objects.get(id = 5)
+>>> a.first_name = "Ketul"
+>>> a.save()
+>>> a = Author.objects.get(id = 1)
+>>> a.books = 1
+Traceback (most recent call last):
+  File "<console>", line 1, in <module>
+  File "/Users/jasonmeyer/Desktop/pythonstack/myEnvironments/djangoEnv/lib/python2.7/site-packages/django/db/models/fields/related_descriptors.py", line 500, in __set__
+    manager.set(value)
+  File "/Users/jasonmeyer/Desktop/pythonstack/myEnvironments/djangoEnv/lib/python2.7/site-packages/django/db/models/fields/related_descriptors.py", line 928, in set
+    objs = tuple(objs)
+TypeError: 'int' object is not iterable
+>>> this_book = Book.objects.get(id=1)
+>>> this_author = Author.objects.get(id=1)
+>>> this_author.book.add(this_book)
+Traceback (most recent call last):
+  File "<console>", line 1, in <module>
+AttributeError: 'Author' object has no attribute 'book'
+>>> this_author.books.add(this_book)
+>>> this_book = Book.objects.get(id=2)
+>>> this_author = Author.objects.get(id=1)
+>>> this_author.books.add(this_book)
+>>> this_book = Book.objects.get(id=1 , id = 2, id =3)
+  File "<console>", line 1
+SyntaxError: keyword argument repeated
+>>> this_book = Book.objects.get(id=1)
+>>> this_author = Author.objects.get(id=2)
+>>> this_author.books.add(this_book)
+>>> this_book = Book.objects.get(id=2)
+>>> this_author = Author.objects.get(id=2)
+>>> this_author.books.add(this_book)
+>>> this_book = Book.objects.get(id=3)
+>>> this_author = Author.objects.get(id=2)
+>>> this_author.books.add(this_book)
+>>> this_book = Book.objects.get(id=1)
+>>> this_author = Author.objects.get(id=3)
+>>> this_author.books.add(this_book)
+>>> this_book = Book.objects.get(id=2)
+>>> this_author = Author.objects.get(id=3)
+>>> this_author.books.add(this_book)
+>>> this_book = Book.objects.get(id=3)
+>>> this_author = Author.objects.get(id=3)
+>>> this_author.books.add(this_book)
+>>> this_book = Book.objects.get(id=4)
+>>> this_author = Author.objects.get(id=3)
+>>> this_author.books.add(this_book)
+>>> this_book = Book.objects.get(id=1)
+>>> this_author = Author.objects.get(id=4)
+>>> this_author.books.add(this_book)
+>>> this_book = Book.objects.get(id=2)
+>>> this_author = Author.objects.get(id=4)
+>>> this_author.books.add(this_book)
+>>> this_book = Book.objects.get(id=3)
+>>> this_author = Author.objects.get(id=4)
+>>> this_author.books.add(this_book)
+>>> this_book = Book.objects.get(id=4)
+>>> this_author = Author.objects.get(id=4)
+>>> this_author.books.add(this_book)
+>>> this_book = Book.objects.get(id=5)
+>>> this_author = Author.objects.get(id=4)
+>>> this_author.books.add(this_book)
+>>> this_book = Book.objects.get(id=3)
+>>> this_author.books.get(this_book)
+Traceback (most recent call last):
+  File "<console>", line 1, in <module>
+  File "/Users/jasonmeyer/Desktop/pythonstack/myEnvironments/djangoEnv/lib/python2.7/site-packages/django/db/models/manager.py", line 85, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/Users/jasonmeyer/Desktop/pythonstack/myEnvironments/djangoEnv/lib/python2.7/site-packages/django/db/models/query.py", line 376, in get
+    clone = self.filter(*args, **kwargs)
+  File "/Users/jasonmeyer/Desktop/pythonstack/myEnvironments/djangoEnv/lib/python2.7/site-packages/django/db/models/query.py", line 794, in filter
+    return self._filter_or_exclude(False, *args, **kwargs)
+  File "/Users/jasonmeyer/Desktop/pythonstack/myEnvironments/djangoEnv/lib/python2.7/site-packages/django/db/models/query.py", line 812, in _filter_or_exclude
+    clone.query.add_q(Q(*args, **kwargs))
+  File "/Users/jasonmeyer/Desktop/pythonstack/myEnvironments/djangoEnv/lib/python2.7/site-packages/django/db/models/sql/query.py", line 1227, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+  File "/Users/jasonmeyer/Desktop/pythonstack/myEnvironments/djangoEnv/lib/python2.7/site-packages/django/db/models/sql/query.py", line 1253, in _add_q
+    allow_joins=allow_joins, split_subq=split_subq,
+  File "/Users/jasonmeyer/Desktop/pythonstack/myEnvironments/djangoEnv/lib/python2.7/site-packages/django/db/models/sql/query.py", line 1130, in build_filter
+    arg, value = filter_expr
+TypeError: 'Book' object is not iterable
+>>> this_book.authors.all()
+<QuerySet [<Author: Author object>, <Author: Author object>, <Author: Author object>]>
+>>> b = this_book.authors.all()
+>>> b[0].first_name
+u'Speros'
+>>> b[1].first_name
+u'John'
+>>> b[2].first_name
+u'Jadee'
+>>> this_book.authors.first()
+<Author: Author object>
+>>>  a = this_book.authors.first()
+  File "<console>", line 1
+    a = this_book.authors.first()
+    ^
+IndentationError: unexpected indent
+>>> a = this_book.authors.first()
+>>> a[0].first_name
+Traceback (most recent call last):
+  File "<console>", line 1, in <module>
+TypeError: 'Author' object does not support indexing
+>>> a.first_name
+u'Speros'
+>>> a.first_name.delete()
+Traceback (most recent call last):
+  File "<console>", line 1, in <module>
+AttributeError: 'unicode' object has no attribute 'delete'
+>>> a.delete(0
+... a.delete()
+  File "<console>", line 2
+    a.delete()
+    ^
+SyntaxError: invalid syntax
+>>> a.delete()
+(4, {u'book_authors.Author': 1, u'book_authors.Author_books': 3})
+>>> this_book = Book.objects.get(id=1)
+>>> this_author = Author.objects.get(id=2)
+Traceback (most recent call last):
+  File "<console>", line 1, in <module>
+  File "/Users/jasonmeyer/Desktop/pythonstack/myEnvironments/djangoEnv/lib/python2.7/site-packages/django/db/models/manager.py", line 85, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/Users/jasonmeyer/Desktop/pythonstack/myEnvironments/djangoEnv/lib/python2.7/site-packages/django/db/models/query.py", line 385, in get
+    self.model._meta.object_name
+DoesNotExist: Author matching query does not exist.
+>>> this_author = Author.objects.get(id=2)
+Traceback (most recent call last):
+  File "<console>", line 1, in <module>
+  File "/Users/jasonmeyer/Desktop/pythonstack/myEnvironments/djangoEnv/lib/python2.7/site-packages/django/db/models/manager.py", line 85, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/Users/jasonmeyer/Desktop/pythonstack/myEnvironments/djangoEnv/lib/python2.7/site-packages/django/db/models/query.py", line 385, in get
+    self.model._meta.object_name
+DoesNotExist: Author matching query does not exist.
+>>> this_author = Author.objects.get(id=3)
+>>> this_author.authors.all()
+Traceback (most recent call last):
+  File "<console>", line 1, in <module>
+AttributeError: 'Author' object has no attribute 'authors'
+>>> this_author.books.all()
+<QuerySet [<Book: Book object>, <Book: Book object>, <Book: Book object>, <Book: Book object>]>
+>>> a = this_author.books.all()
+>>> a[0].name
+u'C sharp'
+>>> a[1].name
+u'Java'
+>>> a[2].name
+u'Python'
+>>> a[3].name
+u'PHP'
+>>> a[4].name
+Traceback (most recent call last):
+  File "<console>", line 1, in <module>
+  File "/Users/jasonmeyer/Desktop/pythonstack/myEnvironments/djangoEnv/lib/python2.7/site-packages/django/db/models/query.py", line 295, in __getitem__
+    return list(qs)[0]
+IndexError: list index out of range
+>>> this_author = Author.objects.get(id=4)
+>>> a = this_author.books.all()
+>>> this_author.books.all()
+<QuerySet [<Book: Book object>, <Book: Book object>, <Book: Book object>, <Book: Book object>, <Book: Book object>]>
+>>> exit()
+(djangoEnv) Jasons-MacBook-Pro:blog jasonmeyer$ 
